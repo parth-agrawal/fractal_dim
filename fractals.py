@@ -10,7 +10,7 @@ plt.plot(x_values, y_values)
 
 # This is because the range() function can't handle floats.
 # Set box size here and increase the min/max by the corresponding 1/b_size ratio.
-b_size = .25
+b_size = .1
 quant = int(1/b_size)
 
 q_x_min = quant * min(x_values)
@@ -29,7 +29,24 @@ for i in range(q_x_min, q_x_max, 1) :
         r_arr.append(rect)
         ax.add_patch(rect)
 
+hit_arr = []
 
+# determine which rects are struck
+for r in r_arr:
+    rx = r.get_x()
+    ry = r.get_y()
+    rw = r.get_width()
+    rh = r.get_height()
+
+    for i in range(0, len(x_values)-1):
+        x = x_values[i]
+        y = y_values[i]
+        if (x >= rx and x <= (rx + rw)) and (y >= ry and y <= (ry + rh)):
+            hit_arr.append(r)
+
+# highlight struck rects
+for r in hit_arr:
+    r.fill = True
 
 plt.show()
 

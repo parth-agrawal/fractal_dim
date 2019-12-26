@@ -4,14 +4,13 @@ import matplotlib.image as mpimg
 import numpy as np 
 
 img = mpimg.imread("C:/Users/parth/Dropbox/Projects/Coding/fractal_dim/britain.png")
-print(img)
 fig, ax = plt.subplots(1)
 
 plt.imshow(img)
 
 # This is because the range() function can't handle floats.
 # Set box size here and increase the min/max by the corresponding 1/b_size ratio.
-b_size = 5
+b_size = 4
 
 r_arr = []
 
@@ -56,6 +55,7 @@ for r in r_arr:
 for r in hit_arr:
     r.fill = True
 
+print(len(hit_arr))
 plt.show()
 
 

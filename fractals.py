@@ -1,35 +1,43 @@
 import matplotlib.pyplot as plt 
 import matplotlib.patches as pat
+import matplotlib.image as mpimg
+import numpy as np 
 
+img = mpimg.imread("C:/Users/parth/Dropbox/Projects/Coding/fractal_dim/britain.png")
+print(img)
 fig, ax = plt.subplots(1)
 
-x_values = [1, 2, 3, 7, 4]
-y_values = [5, 2, 4, 5, 1]
-plt.plot(x_values, y_values)
-
+plt.imshow(img)
 
 # This is because the range() function can't handle floats.
 # Set box size here and increase the min/max by the corresponding 1/b_size ratio.
-b_size = .1
-quant = int(1/b_size)
-
-q_x_min = quant * min(x_values)
-q_x_max = quant * max(x_values)
-
-q_y_min = quant * min(y_values)
-q_y_max = quant * max(y_values)
+b_size = 5
 
 r_arr = []
 
 # Adds rectangles to an array and adds to plot 
-for i in range(q_x_min, q_x_max, 1) :
-    for j in range(q_y_min, q_y_max, 1) :
-        xy = (i/quant, j/quant)
+for i in range(0, len(img[0]), b_size) :
+    for j in range(0, len(img), b_size) :
+        xy = (i, j)
         rect = pat.Rectangle(xy, b_size, b_size, fill = False)
         r_arr.append(rect)
         ax.add_patch(rect)
 
 hit_arr = []
+
+
+x_values = []
+y_values = []
+
+# determine which pixels are black
+for y in range(0, len(img)):
+    for x in range(0, len(img[y])):
+        for p in range(0, len(img[y][x])):
+            pixel = img[y][x][p]
+            if(np.all(pixel == 0)):
+                x_values.append(x)
+                y_values.append(y)
+
 
 # determine which rects are struck
 for r in r_arr:

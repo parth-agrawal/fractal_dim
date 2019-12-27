@@ -29,7 +29,7 @@ def test_hit(b_size):
         for x in range(0, len(img[y])):
             
             pixel = img[y][x]
-            if(np.all(pixel) == 0):
+            if(np.all(pixel) != 1):
                 x_values.append(x)
                 y_values.append(y)
     
@@ -56,8 +56,8 @@ def test_hit(b_size):
 def display_strike(rects, hit_rects):
     # highlight struck rects
     for r in hit_rects:
-        r.set_color('gold')
-
+        # r.set_color('gold')
+        r.set_fill(True)
     # display image and rectangles  
     for r in rects:
         ax.add_patch(r)
@@ -70,7 +70,7 @@ def display_strike(rects, hit_rects):
     plt.show()
 
 
-img = mpimg.imread("C:/Users/parth/Dropbox/Projects/Coding/fractal_dim/britain.png")
+img = mpimg.imread("C:/Users/parth/Dropbox/Projects/Coding/fractal_dim/sierpinski.png")
 fig, ax = plt.subplots(1)
 
 
@@ -83,7 +83,7 @@ for r in range(0, len(img)):
 print("total pixels in image %d" % pix_count)
 
 
-grid, highlighted = test_hit(1)
+grid, highlighted = test_hit(4)
 display_strike(grid, highlighted)
 
 

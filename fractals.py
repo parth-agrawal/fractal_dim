@@ -3,6 +3,7 @@ import matplotlib.patches as pat
 import matplotlib.image as mpimg
 import numpy as np 
 
+
 def test_hit(b_size):
     
     # This is because the range() function can't handle floats.
@@ -22,15 +23,18 @@ def test_hit(b_size):
     x_values = []
     y_values = []
 
+    
     # determine which pixels are black
     for y in range(0, len(img)):
         for x in range(0, len(img[y])):
-            for p in range(0, len(img[y][x])):
-                pixel = img[y][x][p]
-                if(np.all(pixel == 0)):
-                    x_values.append(x)
-                    y_values.append(y)
+            
+            pixel = img[y][x]
+            if(np.all(pixel) == 0):
+                x_values.append(x)
+                y_values.append(y)
     
+    print("length of x_values", len(x_values))
+    print("length of y_values", len(y_values))
     hit_arr = []
 
     # determine which rects are struck
@@ -40,12 +44,12 @@ def test_hit(b_size):
         rw = r.get_width()
         rh = r.get_height()
 
-        for i in range(0, len(x_values)-1):
+        for i in range(0, len(x_values)):
             x = x_values[i]
             y = y_values[i]
-            if (x >= rx and x <= (rx + rw)) and (y >= ry and y <= (ry + rh)):
+            if (x >= rx and x < (rx + rw)) and (y >= ry and y < (ry + rh)):
                 hit_arr.append(r)
-    print(len(r_arr))            
+                break
     return (r_arr, hit_arr)
 
 
@@ -69,7 +73,17 @@ def display_strike(rects, hit_rects):
 img = mpimg.imread("C:/Users/parth/Dropbox/Projects/Coding/fractal_dim/britain.png")
 fig, ax = plt.subplots(1)
 
-grid, highlighted = test_hit(10)
+
+
+pix_count = 0
+for r in range(0, len(img)):
+    for c in range(0, len(img[r])):
+        pix_count += 1
+
+print("total pixels in image %d" % pix_count)
+
+
+grid, highlighted = test_hit(1)
 display_strike(grid, highlighted)
 
 
